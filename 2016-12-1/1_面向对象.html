@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+	/*
+		一般属性挂在类上，而方法挂在类的原型上 
+		1.字符串不能加属性和方法
+		   但是当我们查看某个简单类型的某个属性或者方法时    系统会偷偷的将此简单类型转成对象，进行操作，之后这个包装对象自动销毁
+		   整个过程就是简单类型也能查看某个属性或者方法的原理
+		   var str2 = new string("abc");表面看起来字符串   实际已经是内置对象
+		   简单类型的属性只能读不能写 str.length=1
+		2.hasownproperty   
+		   查看某对象的属性---返回值true   false
+		   不会沿着原型链查找属性
+		    写到类里边的才是自身的-true   其他的都不是-false
+		
+		
+		3.简单类型的赋值就是赋值--不会影响另一个    
+			var num = 10;       var num2 = num;  num2++        console.log(num)=10
+			
+		   而复合对象类型的赋值是赋址-- 改变对象会改变地址     
+		    var arr = [1,2,3];  var arr2 = arr;  arr2.push(4)  console.log(arr)=[1,2,3,4]
+		   
+		4.如何改变arr2不影响arr   
+		   ---将数组arr的项通过for in/for循环一个一个给arr2--赋值   
+		   注意：但是对象无length   不能用for循环   只能for in循环     ----特殊属性值为1：   2：  
+		      两个对象一定不相等
+		      
+		     
+	*/
+	function Teacher(name,age){
+		this.name = name;
+		this.age = age;
+	}
+	
+	Teacher.prototype.init = function(){
+		this.say();
+		this.running();
+	}
+	
+	Teacher.prototype.say = function(){
+		alert(this.name);
+	}
+	Teacher.prototype.running = function(){
+		alert('我会跑');
+	}
+	
+	var t1 = new Teacher('莫莫',88);
+	var t2 = new Teacher('付强',998);
+	
+	t2.say();
+	t1.init();
+	
+	
+	
+</script>	
+</body>
+</html>
