@@ -91,7 +91,7 @@
 	Tab.prototype.events = function(){//------点击选项卡切换图片---静态方法
 		var _this = this;
 		for(var i=0;i<this.btns.length;i++){
-			(function(index){
+			(function(index){//----事件无法直接获取到每一个i必须
 				_this.btns[index].onclick = function(){
 					//alert(this);
 					_this.num = index;
