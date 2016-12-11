@@ -96,10 +96,10 @@ html,body{
 			依次调用这个事件的这些方法
 			
 	*/
-	
-	function addEvent(obj,events,fn){
-		obj.zdy = obj.zdy || {};
-		obj.zdy[events] = obj.zdy[events] || [];
+//----------------------------------------模板---------------------------	
+	function addEvent(obj,events,fn){//--------绑定事件
+		obj.zdy = obj.zdy || {};//判断有无属性
+		obj.zdy[events] = obj.zdy[events] || [];//判断该属性有无该事件
 		obj.zdy[events].push(fn);
 	}
 	

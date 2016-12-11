@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+<script src="sizzle.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<ul>
+		<li style="width:100px" id="li">111</li>
+		<li class="li">222</li>
+		<li>333</li>
+		<li class="li">444</li>
+		<li class="li">555</li>
+	</ul>
+<script src="sizzle.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+		//闭包传参的优点：访问速度更快，不会一层一层往上找
+	(function(global,factory){//形参，函数--global全局
+		factory(global);
+	})(typeof window !== 'undefined'?window:this,function(global,noGlobal){
+		//因为jQ不但可以在浏览器环境下用，还可以在node环境中用    若为undefind即在window环境中  若不是就在他指代的其他环境中
+		//因为在低版本浏览器下直接undefined的话undefined会被修改，用noGlobal指代undefined时，效力更广，那么当函数没有传参的时候，无论什么浏览器就都是undefined，一定不会被修改
+		function jQuery (selector){//实参    无new化操作。（别人在使用这个jquery的时候不用new）
+			return new jQuery.init(selector);//	new Jquery的话   自己调用自己就变死循环了  
+		}
+		
+		jQuery.prototype = {//Jquery原型下的方法------css里边有1个参数的情况判断 
+			css:function(){ 
+				var obj = Object.prototype.toString;//----tostring属性
+			
+				if(arguments.length == 1){
+					//是对象的情况下批量设置
+					if(obj.call(arguments[0]) === '[object Object]'){//---如果是一个对象
+						for(var i=0;i<this.length;i++){
+							for(var attr in arguments[0]){
+								this[i].style[attr] = arguments[0][attr]
+							}
+						}
+					}else{//不是对象---获取
+						
+						//console.log(this)
+						return this[0].style[arguments[0]];//默认找第0个
+					}
+				}
+			}
+		}
+		
+		jQuery.init = function(selector){//Jquery创建一个方法,这个方法的目的是为了无new化操作（不会让自己调用自己）
+			if(typeof selector === 'function'){//typeof快但不精确，tostring用原生的话性能较差-----如果是一个函数，加载内容
+				document.addEventListener('DOMContentLoaded',selector)//高版本dom加载   $(function(){  alert（1）  })
+			}else{//string数组的情况下走sizzle选择器进行获取
+				var arr = Sizzle(selector);
+				for(var i=0;i<arr.length;i++){
+					this[i] = arr[i];
+				}
+				
+				this.length = arr.length;//添加一个length属性
+			}
+		}
+		
+		jQuery.init.prototype = jQuery.prototype;//访问Jquery.init实例化对象的方法能直接访问到Jquery下的方法----类式继承
+		
+		window.$ = jQuery;//因为闭包了外界是访问不到里面的方法的，通过将对象挂在window下，所有空间都能访问到Jquery对象
+		
+	});
+	
+$(function(){
+	//console.log($('li'))//.css()
+	/*
+		{
+			0:li,
+			1:li,
+			length:2
+		}
+	*/
+	//console.log($('li'))
+	//console.log()
+	
+//	$('#li').css('width')   //传一个参数  获取
+
+//	$('#li').css({
+//		width:'100px',
+//		height:'100px',
+//		background:'red'
+//	})
+
+	$('li').css({//设置一个对象
+		width:'100px',
+		height:'100px',
+		background:'blue'
+	});
+	
+	//console.log($($('li')[0]).css('width'))//设置一个
+	
+});
+</script>
+</body>
+</html>

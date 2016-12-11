@@ -42,7 +42,7 @@
 		this.div1 = document.getElementById(id);
 		this.disX = 0;
 		this.disY = 0;
-		this.settings = {
+		this.settings = {//默认参数，有配置走配置  没配置走默认 ------  对象形式管理更清晰  +可以调换位置
 			d:function(){},
 			m:function(){},
 			u:function(){}
@@ -56,7 +56,7 @@
 		
 		this.div1.addEventListener('mousedown',down);
 		function down(ev){
-			_this.settings.d.call(_this);
+			_this.settings.d.call(_this);//类似  构造函数.prototype
 			trigger(_this,'按下');
 			_this.fnDown(ev,down,_this);
 		}
