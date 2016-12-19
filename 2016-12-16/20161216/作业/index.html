@@ -1,0 +1,121 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<link href="style/weibo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="znsArea">
+<!--留言-->
+     <div class="takeComment">
+        <textarea name="textarea" class="takeTextField" id="tijiaoText"></textarea>
+        <div class="takeSbmComment">
+            <input type="button" id="btn1" class="inputs" value="" />
+            <span>(可按 Enter 回复)</span>
+        </div>
+    </div>
+<!--已留-->
+    <div class="commentOn">
+        <div class="messList" id="div1" style="height:502px">
+        	<!--<div class="reply">
+                <p class="replyContent">卫士，新款卫士将推出总共14种车身式样</p>
+                <p class="operation">
+                    <span class="replyTime">2018-09-08 16:37:60</span>
+                    <span class="handle">
+                    	<a href="javascript:;" class="top">0</a>
+                        <a href="javascript:;" class="down_icon">0</a>
+                        <a href="javascript:;" class="cut">删除</a>
+                    </span>
+                </p>
+            </div>-->
+        </div>
+        <div class="page" id="page">
+        	<a href="javascript:;" class="active">1</a>
+        	<a href="javascript:;">2</a>
+        	<a href="javascript:;">3</a>
+        </div>
+    </div>
+</div>
+</body>
+<script src="jquery-3.1.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="../ajax2.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(function(){
+   var  $btn1 = $("#btn1");
+   var  $tijiao = $("#tijiaoText"); 
+   var  $messList = $(".messList");
+   
+   
+   
+   
+   
+    $btn1.on("click",function(){
+    	
+   	    var  newdiv = createNew($tijiao.val(),settime());
+   	    $messList.append(newdiv);
+   	    cut();
+   	    
+    });
+   
+	  	    
+   	
+   
+   
+   
+   //---------生成----------
+   function createNew(newVal,newTime){
+   	var newdiv = 
+   	        `<div class="reply">
+                <p class="replyContent">${newVal}</p>
+                <p class="operation">
+                    <span class="replyTime">${newTime}</span>
+                    <span class="handle">
+                    	<a href="javascript:;" class="top">0</a>
+                        <a href="javascript:;" class="down_icon">0</a>
+                        <a href="javascript:;" class="cut">删除</a>
+                    </span>
+                </p>
+            </div>`;
+     return $(newdiv);
+   }
+   
+   //----------删除-------------
+   function cut(){
+   		var  $handle = $(".handle");
+   		$.each($handle, function(i,e){
+   			(function(){
+   				$(e).on("click",function(ev){
+		   	   		var parentDiv = $(ev.target).closest(".reply");
+		   	   		if ($(ev.target).attr("class")=="cut") {
+		   	   		 	parentDiv.remove();
+		   	   		}
+	   	     	})
+   			})()
+	   	});
+   	}
+   
+   //------------日期--------
+   function settime(){
+   	  var date = new Date();
+   	  var year = date.getFullYear();
+   	  var month = toDB(date.getMonth()+1);
+   	  var date2 = toDB(date.getDate());
+   	  var hours = toDB(date.getHours());
+   	  var minutes = toDB(date.getMinutes());
+   	  var seconds = toDB(date.getSeconds());
+   	  //var day = date.getDay();
+   	  
+   	  var time = year+"-"+month+"-"+date2+"  "+hours+":"+minutes+":"+seconds;
+   	  return time;
+   	  
+   }
+   //-----------十位数---------------
+   function toDB(nub){
+   	  return nub<10?"0"+nub:""+nub;
+   }
+   
+});
+  
+</script>
+</html>

@@ -18,23 +18,23 @@
 	<div id="div1"></div>
 <script type="text/javascript">
 	/*
-		先分清楚this属性的值是什么类型;
+		-先分清楚this属性的值是什么类型;
 		
-		单纯的函数名+括号， this -> window
+		-单纯的函数名+括号， this -> window
 		
-		将一个函数交给事件调用  this -> 是触发事件的这个对象（*PC）
+		-将一个函数交给事件调用  this -> 是触发事件的这个对象（*PC）
 		
-		定时器中this -> window{
+		-定时器中this -> window{
 			只要定时器是直接调用某个函数或者方法，那么this就是window
 			否则this该是谁就是谁
 		}
 		
-		有主一般情况下 this就是主,如果被定时器调用，那么this一样是window
+		-有主一般情况下 this就是主,如果被定时器调用，那么this一样是window
 		
-		call、apply 写的this是谁就是谁
+		-call、apply 写的this是谁就是谁
 		
 		
-		new -> this为对象
+		-new -> this为对象
 		
 		提前存一个this,当使用这个this的时候，this就是存的那个
 		
