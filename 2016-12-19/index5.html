@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -61,19 +61,26 @@
 	function CreateDate(){//-------类
 		this.box = document.getElementById('div1'); //下方显示的总信息栏
 		this.txt = document.getElementById('tijiaoText');//上方输入的内容
+		this.cuts = document.getElementsByClassName("cut");
 	}
 	
 	
 	CreateDate.prototype = {
 		constructor:CreateDate,//可以查看某个对象的构造函数是谁，constructor会无形被修改,虽然不会改变某个方法的执行结果，但是会影响你的客户维护。解决：手动修改constructor指向
 		//--------------初始化代码------------------
-		init:function(obj,obj2){
+		init:function(obj){
 			var _this = this;
 			obj.onclick = function(){//----obj点击事件时
 				_this.Event(obj);//调用Event函数，创建数据结构
-				alert(66)
 			};
+			for (var i = 0; i < _this.cuts.length; i++) {
+			    _this.cuts[i].onclick = function(){
+						alert(22)
+				}
+			}
+			
 			this.loaded(1);//调用loaded函数，加载第一页数据    默认第一页的数据
+			
 			
 		},
 		
@@ -103,7 +110,26 @@
 				alert('你快勒马？');
 			}
 		},
-
+		//----------------删除单行数据------------
+		Del:function(){
+			//weibo.php?act=del&id=num
+			 var _this = this;
+			 ajax({
+			 	url:"weibo.php",
+			 	data:{
+			 		act:"del",
+			 		id:num
+			 	},
+			 	succ:function(json){
+			 		if(!json.error){
+			 			alert(4)
+							//数据已经添加到数据库中了
+							_this.loaded(1);
+							_this.txt.value = '';
+					}
+			 	}
+			 });
+		},
 		
 		
 		
@@ -184,14 +210,8 @@
 	c1.txt.onkeydown = function(ev){
 		if(ev.keyCode === 13 && ev.ctrlKey){
 			c1.Event();
-			
 		}
 	};
-	c1.box.onclick = function(ev){
-		if(ev.target.className =="cut"){
-			c1.Del();
-		}
-	}
 
 	
 </script>

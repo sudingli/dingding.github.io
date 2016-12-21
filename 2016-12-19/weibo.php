@@ -5,13 +5,13 @@
 	Date:	2015-4-5
 
 	usage:
-			weibo.php?act=add&content=xxx	添加一条
+			weibo.php?act=add&content=xxx	添加一条--
 				返回：{error:0, id: 新添加内容的ID, time: 添加时间}
 			
 			weibo.php?act=get_page_count	获取页数
 				返回：{count:页数}
 			
-			weibo.php?act=get&page=2		获取一页数据
+			weibo.php?act=get&page=2		获取一页数据--
 				返回：[{id: ID, content: "内容", time: 时间戳, acc: 顶次数, ref: 踩次数}, {...}, ...]
 			
 			weibo.php?act=acc&id=num			顶某一条数据
